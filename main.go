@@ -10,11 +10,9 @@ import (
 type User struct {
 	gorm.Model
 	Name  string
-	CurrentSlash string
 }
   
 func main() {
-	log.Println("starting")
 	var err error
 	db, err := gorm.Open(sqlite.Open("gorm.db"), &gorm.Config{})
 	if err != nil {
@@ -23,5 +21,16 @@ func main() {
 		log.Println("Connected to the database")
 	}
 
-	db.AutoMigrate(&User{})
+	if db.Migrator().HasTable(&User{}) {
+		log.Fatal("has `users table, dropping...`")
+		db.Migrator().DropTable(&User{})
+	}
+
+	db.Migrator().CreateTable(&User{})
+
+	db.Create(&[]User{
+		{Name: "jinzhu1" }, 
+		{Name: "jinzhu2" },
+		{Name: "jinzhu3" },
+	})
 }
