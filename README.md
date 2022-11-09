@@ -9,6 +9,9 @@ This sample shows how to reset hardcoded rows when doing code-first migration - 
 - [ ] [dirkarnez/shopspring-decimal-playground](https://github.com/dirkarnez/shopspring-decimal-playground)
 
 ### Proofs
-- [ ] 
+- [x] 1000 * 0.01 = 10.0
+- [x] 10 - 10/3 - 10/3 = 3.34
+- [x] 3.34 + 0.005 = 3.35
+
 ### Notes
 - In init stage, consider drop table if the table structure needs to be updated.
