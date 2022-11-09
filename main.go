@@ -45,14 +45,31 @@ func main() {
 	log.Println("user.Saving:", user.Saving)
 
 	for i := 0; i < 1000; i++ {
-		user.Saving = user.Saving.Add(decimal.NewFromFloat(.01))
+		user.Saving = user.Saving.Add(decimal.NewFromFloat(0.01))
 	}
 
 	fmt.Println("Going to persist:", user.Saving)
 	db.Save(&user)
+
 	var userReQuery User
 	db.First(&userReQuery, 1)
 	log.Println("Saved userReQuery.Saving:", userReQuery.Saving)
+
+	x := decimal.NewFromInt(10).Div(decimal.NewFromInt(3)) // 10/3
+	y := decimal.NewFromInt(10).Div(decimal.NewFromInt(3)) // 10/3
+	userReQuery.Saving = userReQuery.Saving.Sub(x.Round(2))
+	userReQuery.Saving = userReQuery.Saving.Sub(y.Round(2))
+	db.Save(&userReQuery)
+
+	var userReQuery2 User
+	db.First(&userReQuery2, 1)
+	log.Println("Saved userReQuery2.Saving:", userReQuery2.Saving.Round(2)) // 10 - 3.33 - 3.33 = 3.34
+	userReQuery2.Saving = userReQuery2.Saving.Round(2).Add(decimal.NewFromFloat32(0.005).Round(2))
+	db.Save(&userReQuery2)
+
+	var userReQuery3 User
+	db.First(&userReQuery3, 1)
+	log.Println("Saved userReQuery3.Saving:", userReQuery3.Saving.Round(2))
 
 	log.Println("end")
 }

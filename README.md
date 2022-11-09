@@ -8,5 +8,7 @@ This sample shows how to reset hardcoded rows when doing code-first migration - 
 ### TODOs
 - [ ] [dirkarnez/shopspring-decimal-playground](https://github.com/dirkarnez/shopspring-decimal-playground)
 
+### Proofs
+- [ ] 
 ### Notes
 - In init stage, consider drop table if the table structure needs to be updated.
