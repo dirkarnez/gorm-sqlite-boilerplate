@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/dirkarnez/gorm-sqlite-boilerplate/query"
 	"github.com/shopspring/decimal"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -22,6 +23,7 @@ func main() {
 		log.Fatal("db open err")
 	} else {
 		log.Println("Connected to the database")
+		db = db.Debug()
 	}
 
 	if db.Migrator().HasTable(&User{}) {
@@ -70,6 +72,15 @@ func main() {
 	var userReQuery3 User
 	db.First(&userReQuery3, 1)
 	log.Println("Saved userReQuery3.Saving:", userReQuery3.Saving.Round(2))
+
+	var q = query.Use(db)
+
+	users, err := q.User.Where(q.User.Name.Eq("modi")).Find()
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		fmt.Println(users)
+	}
 
 	log.Println("end")
 }
